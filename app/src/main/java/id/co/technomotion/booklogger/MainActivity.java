@@ -23,7 +23,7 @@ import static android.R.layout.*;
 public class MainActivity extends ActionBarActivity {
     Button btnSimpan;
     ListView listViewBook;
-    EditText editTextInput;
+    EditText editTextInput, editPengarang, editHalaman;
 
     //menginisiasi arraylist yang akan digunakan untuk menyimpan daftar judul buku
     //ArrayList<String> listOfBook=new ArrayList<>();
@@ -38,18 +38,21 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         listViewBook= (ListView) findViewById(R.id.listView_output);
-        editTextInput= (EditText) findViewById(R.id.editText_input);
+        editTextInput= (EditText) findViewById(R.id.inputJudul);
+        editPengarang = (EditText) findViewById(R.id.inputPengarang);
+        editHalaman = (EditText) findViewById(R.id.inputHalaman);
         btnSimpan= (Button) findViewById(R.id.btn_simpan);
 
         //menyiapkan data
         listOfBook.add(new Buku("Laskar Pelangi", "Andrea Hirata", "15"));
+        listOfBook.add(new Buku("Naruto", "Masashi", "200"));
         /*listOfBook.add("5 cm");
         listOfBook.add("Ayat ayat cinta");
         listOfBook.add("Lima Menara");
         listOfBook.add("Tutorial Pemrograman Android");*/
 
         //meng-inisiasi arrayadapter
-        adapter=new ArrayAdapter<String>(this, simple_list_item_1,listOfBook);
+        ListBukuAdapter adapter = new ListBukuAdapter(this, listOfBook);
         listViewBook.setAdapter(adapter);
 
         //mengaktifkan fungsi onItemClickListener dan onItemLongClickListener
@@ -78,15 +81,19 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 //something happen if user click this button
-                String title=editTextInput.getText().toString();
+                String title = editTextInput.getText().toString();
+                String author = editPengarang.getText().toString();
+                String page = editHalaman.getText().toString();
                 // dilakukan check untuk memastikan bahwa user telah menulis judul buku
                 if(!title.isEmpty()){
                     // menambahkan judul buku kedalam listOfBook
-                    listOfBook.add(title);
+                    listOfBook.add(new Buku(title,author,page));
                     // meng-update listview
                     adapter.notifyDataSetChanged();
                     // clear edittext
                     editTextInput.setText("");
+                    editPengarang.setText("");
+                    editHalaman.setText("");
                 }else{
                     Toast.makeText(getApplicationContext(),"judul buku waji diisi",Toast.LENGTH_SHORT).show();
                 }
