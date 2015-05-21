@@ -52,16 +52,16 @@ public class MainActivity extends ActionBarActivity {
         listOfBook.add("Tutorial Pemrograman Android");*/
 
         //meng-inisiasi arrayadapter
-        final ListBukuAdapter adapter = new ListBukuAdapter(this, listOfBook);
-        listViewBook.setAdapter(adapter);
+        final ListBukuAdapter adapterX = new ListBukuAdapter(this, listOfBook);
+        listViewBook.setAdapter(adapterX);
 
         //mengaktifkan fungsi onItemClickListener dan onItemLongClickListener
         listViewBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //something happen
-                String clickedItem= (String) parent.getAdapter().getItem(position);
-                Log.d("booklogger",clickedItem);
+                Buku clickedItem= (Buku) parent.getAdapter().getItem(position);
+                //Log.d("booklogger",clickedItem);
             }
         });
 
@@ -69,9 +69,9 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //something happen
-                String longClickedItem= (String) parent.getAdapter().getItem(position);
-                Log.d("booklogger",longClickedItem);
-                showDeleteDialog(longClickedItem);
+                Buku longClickedItem= (Buku) parent.getAdapter().getItem(position);
+                //Log.d("booklogger",longClickedItem);
+                showDeleteDialog(longClickedItem, adapterX);
                 return false;
             }
         });
@@ -89,7 +89,7 @@ public class MainActivity extends ActionBarActivity {
                     // menambahkan judul buku kedalam listOfBook
                     listOfBook.add(new Buku(title,author,page));
                     // meng-update listview
-                    adapter.notifyDataSetChanged();
+                    adapterX.notifyDataSetChanged();
                     // clear edittext
                     editTextInput.setText("");
                     editPengarang.setText("");
@@ -126,16 +126,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
     // mmbuat alert dialog untuk fungsi hapus buku
-    private void showDeleteDialog(final String bookTitle){
+    private void showDeleteDialog(final Buku bookTitle, final ListBukuAdapter adapterXX){
         AlertDialog.Builder deleteDialog=new AlertDialog.Builder(this);
-        deleteDialog.setMessage("Anda yakin untuk menghapus \n"+bookTitle+"?");
+        deleteDialog.setMessage("Anda yakin untuk menghapus \n"+bookTitle.getJudulBuku()+"?");
         deleteDialog.setPositiveButton("Ya",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 listOfBook.remove(bookTitle);
                 // setelah menghapus, kita perlu meng-update listview
-                adapter.notifyDataSetChanged();
+                adapterXX.notifyDataSetChanged();
             }
         });
         deleteDialog.setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
