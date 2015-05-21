@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
         listOfBook.add("Tutorial Pemrograman Android");*/
 
         //meng-inisiasi arrayadapter
-        ListBukuAdapter adapter = new ListBukuAdapter(this, listOfBook);
+        final ListBukuAdapter adapter = new ListBukuAdapter(this, listOfBook);
         listViewBook.setAdapter(adapter);
 
         //mengaktifkan fungsi onItemClickListener dan onItemLongClickListener
