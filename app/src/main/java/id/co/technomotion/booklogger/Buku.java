@@ -13,6 +13,18 @@ public class Buku {
         this.jumlahHalaman = jumlahHalaman;
     }
 
+    public  void SetJudulBuku(String judulBuku){
+        this.judulBuku = judulBuku;
+    }
+
+    public void SetPengarang(String namaPengarang){
+        this.namaPengarang = namaPengarang;
+    }
+
+    public void SetHalaman(String jumlahHalaman){
+        this.jumlahHalaman = jumlahHalaman;
+    }
+
     public String getJudulBuku(){
         return judulBuku;
     }

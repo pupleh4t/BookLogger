@@ -24,6 +24,9 @@ public class MainActivity extends ActionBarActivity {
     Button btnSimpan;
     ListView listViewBook;
     EditText editTextInput, editPengarang, editHalaman;
+    boolean clicked = false;
+    int pos;
+    AdapterView<?> parentx;
 
     //menginisiasi arraylist yang akan digunakan untuk menyimpan daftar judul buku
     //ArrayList<String> listOfBook=new ArrayList<>();
@@ -61,6 +64,14 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //something happen
                 Buku clickedItem= (Buku) parent.getAdapter().getItem(position);
+                clicked = true;
+                parentx = parent;
+                pos = position;
+
+                editTextInput.setText(clickedItem.getJudulBuku());
+                editPengarang.setText(clickedItem.getNamaPengarang());
+                editHalaman.setText(clickedItem.getJumlahHalaman());
+                //EditBuku(clickedItem, adapterX);
                 //Log.d("booklogger",clickedItem);
             }
         });
@@ -85,9 +96,17 @@ public class MainActivity extends ActionBarActivity {
                 String author = editPengarang.getText().toString();
                 String page = editHalaman.getText().toString();
                 // dilakukan check untuk memastikan bahwa user telah menulis judul buku
-                if(!title.isEmpty()){
-                    // menambahkan judul buku kedalam listOfBook
-                    listOfBook.add(new Buku(title,author,page));
+                if(!title.isEmpty() && !author.isEmpty() && !page.isEmpty()){
+                    if (!clicked) {
+                        // menambahkan judul buku kedalam listOfBook
+                        listOfBook.add(new Buku(title, author, page));
+                    }
+                    else {
+                        Buku clickedItem= (Buku) parentx.getAdapter().getItem(pos);
+                        EditBuku(clickedItem);
+                    }
+
+                    clicked = false;
                     // meng-update listview
                     adapterX.notifyDataSetChanged();
                     // clear edittext
@@ -95,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
                     editPengarang.setText("");
                     editHalaman.setText("");
                 }else{
-                    Toast.makeText(getApplicationContext(),"judul buku waji diisi",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"data buku waji diisi",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -145,5 +164,14 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         deleteDialog.show();
+    }
+
+    public void EditBuku(Buku book){
+
+
+        book.SetJudulBuku(editTextInput.getText().toString());
+        book.SetPengarang(editPengarang.getText().toString());
+        book.SetHalaman(editHalaman.getText().toString());
+
     }
 }
