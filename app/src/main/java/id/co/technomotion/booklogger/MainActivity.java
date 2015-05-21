@@ -26,7 +26,8 @@ public class MainActivity extends ActionBarActivity {
     EditText editTextInput;
 
     //menginisiasi arraylist yang akan digunakan untuk menyimpan daftar judul buku
-    ArrayList<String> listOfBook=new ArrayList<>();
+    //ArrayList<String> listOfBook=new ArrayList<>();
+    ArrayList<Buku> listOfBook = new ArrayList<>();
 
     //mendeklarasikan arrayadapter
     ArrayAdapter<String> adapter;
@@ -41,11 +42,11 @@ public class MainActivity extends ActionBarActivity {
         btnSimpan= (Button) findViewById(R.id.btn_simpan);
 
         //menyiapkan data
-        listOfBook.add("Laskar Pelangi");
-        listOfBook.add("5 cm");
+        listOfBook.add(new Buku("Laskar Pelangi", "Andrea Hirata", "15"));
+        /*listOfBook.add("5 cm");
         listOfBook.add("Ayat ayat cinta");
         listOfBook.add("Lima Menara");
-        listOfBook.add("Tutorial Pemrograman Android");
+        listOfBook.add("Tutorial Pemrograman Android");*/
 
         //meng-inisiasi arrayadapter
         adapter=new ArrayAdapter<String>(this, simple_list_item_1,listOfBook);
